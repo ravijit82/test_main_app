@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "module": "CommonJS",
+    "target": "es2016",
+    "jsx": "preserve",
+    "checkJs": false,
+    "baseUrl": "./",
+    "resolveJsonModule": true,
+    "ignoreDeprecations": "5.0",
+    "paths": {
+      "@components/*": ["./src/components/*"],
+      "@locales/*": ["./src/locales/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@pages/*": ["./src/pages/*"]
+    }
+  },
+  "include": ["src/**/*.js", "src/**/*.jsx", "src/**/*.json"],
+  "useDefineForClassFields": true,
+  "exclude": ["node_modules"]
+}
