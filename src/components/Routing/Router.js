@@ -8,7 +8,7 @@ const Login = LazyLoadRoute(lazy(() => import("@pages/Login")));
 const Dashboard = LazyLoadRoute(lazy(() => import("@pages/Dashboard")));
 const NotFound = LazyLoadRoute(lazy(() => import("@pages/NotFound")));
 
-const routes = [
+const defaultRoutes = [
   {
     path: "/",
     element: <Login />,
@@ -26,6 +26,30 @@ const routes = [
   },
 ];
 
-const router = createBrowserRouter(routes);
+export const getRoutesFromModule = (modules) => {
+  let routes = [];
+  modules.every((item) => {
+    if (item?.routes) {
+      routes = [
+        ...routes,
+        ...item?.routes({ ProtectedRoute, RouteErrorHandler }),
+      ];
+    }
+    return true;
+  });
+  return routes;
+};
 
-export default router;
+const injectAdditionalRoutes = (routes = []) => {
+  const [r1, r2, r3] = defaultRoutes;
+  const newRoutes = [r1, r2, ...routes, r3];
+
+  console.log("newRoutes", newRoutes);
+  return newRoutes;
+};
+
+const getRouter = (additionalRoutes) => {
+  return createBrowserRouter(injectAdditionalRoutes(additionalRoutes));
+};
+
+export default getRouter;

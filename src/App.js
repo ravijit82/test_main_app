@@ -1,8 +1,9 @@
 import { IntlProvider } from "react-intl";
 import { useEffect, useState } from "react";
 import { RouterProvider } from "react-router-dom";
-import router from "@components/Routing/Router";
 import GlobalErrorHandler from "@components/ErrorHandling/GlobalErrorHandler";
+import getRouter, { getRoutesFromModule } from "@components/Routing/Router";
+import * as TestModule from "@components/test_module_1/src/index";
 
 function loadLocaleData(locale = "en-US") {
   switch (locale) {
@@ -18,6 +19,8 @@ function App() {
   const selectedLocale = "en";
 
   const [messages, setMessages] = useState({});
+
+  const routes = getRoutesFromModule([TestModule]);
 
   useEffect(() => {
     async function loadLocales(localeToLoad) {
@@ -37,7 +40,7 @@ function App() {
         defaultLocale={defaultLocale}
         messages={messages}
       >
-        <RouterProvider router={router} />
+        <RouterProvider router={getRouter(routes)} />
       </IntlProvider>
     </GlobalErrorHandler>
   );
